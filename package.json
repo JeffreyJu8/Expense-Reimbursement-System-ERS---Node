@@ -1,0 +1,22 @@
+{
+  "name": "foundation_project",
+  "version": "1.0.0",
+  "description": "foundation project for revature",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JeffreyJu8/Revature_Foundation_Project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JeffreyJu8/Revature_Foundation_Project/issues"
+  },
+  "homepage": "https://github.com/JeffreyJu8/Revature_Foundation_Project#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
