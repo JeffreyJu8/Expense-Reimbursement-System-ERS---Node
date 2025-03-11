@@ -18,7 +18,11 @@
   },
   "homepage": "https://github.com/JeffreyJu8/Revature_Foundation_Project#readme",
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.758.0",
+    "@aws-sdk/lib-dynamodb": "^3.758.0",
     "aws-sdk": "^2.1692.0",
-    "express": "^4.21.2"
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "uuid": "^11.1.0"
   }
 }
