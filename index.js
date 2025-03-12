@@ -6,12 +6,12 @@ const bodyParser = require("body-parser");
 
 const PORT = 3000;
 
-const employeeController = require("./controller/employeeController");
+const registerController = require("./controller/registerController");
 
 // parse JSON request body
 app.use(express.json());
 
-app.use("/register", employeeController);
+app.use("/register", registerController);
 
 
 app.listen(PORT, () => {

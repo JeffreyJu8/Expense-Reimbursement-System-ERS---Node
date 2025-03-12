@@ -25,7 +25,8 @@ async function registerEmployee(user){
         Item: {
             employee_id: user.employee_id,
             username: user.username,
-            password: user.password
+            password: user.password,
+            role: "employee"
         }
     });
 
