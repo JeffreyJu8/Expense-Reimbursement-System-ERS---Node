@@ -10,9 +10,33 @@ require("dotenv").config();
 // })
 
 const client = new DynamoDBClient({
-    region: process.env.AWS_REGION,
+    region: process.env.AWS_DEFAULT_REGION,
     credentials: {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
     },
 });
+
+const documentClient = DynamoDBDocumentClient.from(client);
+
+async function registerEmployee(user){
+    const command = new PutCommand({
+        TableName: 'Employee',
+        Item: {
+            employee_id: user.employee_id,
+            username: user.username,
+            password: user.password
+        }
+    });
+
+    try{
+        await documentClient.send(command);
+        return user;
+    }
+    catch(err){
+        console.error(err);
+        return null;
+    }
+}
+
+module.exports = { registerEmployee };
