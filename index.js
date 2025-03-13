@@ -19,7 +19,7 @@ app.use("/register", registerController);
 
 app.use("/login", loginController);
 
-// app.use("/tickets", submitTicketController);
+app.use("/tickets", authenticateToken, submitTicketController);
 
 app.get("/protected", authenticateToken, (req, res) => {
     res.json({message: "Accessed Protected Route", user: req.user});

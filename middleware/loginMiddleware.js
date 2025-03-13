@@ -57,7 +57,7 @@ async function getUser(data){
 
       try {
         const result = await documentClient.send(new QueryCommand(params));
-        console.log("Query result:", result);
+        // console.log("Query result:", result);
         if (result.Items || result.Items.length > 0) {
             return result.Items[0]; // Return existing user
           }

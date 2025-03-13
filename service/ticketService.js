@@ -1,4 +1,4 @@
-const employeeDAO = require("../repository/employeeDAO");
+const ticketDAO = require("../repository/ticketDAO");
 
 
 async function submitTicket({id, employee_id, description, type, amount}){

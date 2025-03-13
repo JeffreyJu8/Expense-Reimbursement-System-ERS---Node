@@ -1,6 +1,9 @@
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
 require("dotenv").config();
 const { DynamoDBDocumentClient, QueryCommand } = require("@aws-sdk/lib-dynamodb");
+const jwt = require("jsonwebtoken");
+
+const secretKey = "my-secret-key";
 
 
 const client = new DynamoDBClient({
@@ -12,6 +15,39 @@ const client = new DynamoDBClient({
 });
 
 const documentClient = DynamoDBDocumentClient.from(client);
+
+async function authenticateToken(req, res, next){
+
+    // authorization: "Bearer tokenstring"
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+
+    //console.log("Received Token:", token); 
+
+    if(!token){
+        return res.status(403).json({message: "Forbidden Access"});
+    }else{
+        const user = await decodeJWT(token);
+        //console.log("Decoded User:", user);
+
+        if(!user){
+            return res.status(403).json({message: "Invalid token!"});
+        }
+        req.id = user.id;
+        console.log("employee_id: ", req.id);
+        // req.user = user;
+        next();
+    }
+}
+
+async function decodeJWT(token){
+    try{
+        return jwt.verify(token, secretKey);
+    }catch(err){
+        console.error(err);
+        return null;
+    }
+}
 
 
 async function validateTicketMiddleware(req, res, next){
@@ -62,9 +98,8 @@ async function validateAmount(data){
 }
 
 
-async function validateTicket(data){
-    return (data.id && data.employee_id && data.description && data.type && data.amount);
+// module.exports = validateTicketMiddleware;
+module.exports = {
+    authenticateToken,
+    validateTicketMiddleware
 }
-
-
-module.exports = validateTicketMiddleware;
