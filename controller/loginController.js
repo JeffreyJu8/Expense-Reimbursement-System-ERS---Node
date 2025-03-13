@@ -1,12 +1,28 @@
 const express = require("express");
 const router = express.Router();
 const employeeService = require("../service/employeeService");
+const loginMiddleware = require("../middleware/loginMiddleware");
+const jwt = require('jsonwebtoken');
 
-router.post("/", async (req,res) => {
-const {username, password} = req.body;
-    const newEmployee = { username, password };
+const secretKey = "my-secret-key";
 
-    const data = await employeeService.registerEmployee(newEmployee);
+router.post("/", loginMiddleware, async (req,res) => {
+    const {username, password} = req.body;
 
-    res.status(201).json({message: "Employee Created: ", Employee: data});
+    const data = {username, password}
+
+    const token = jwt.sign(
+        {
+            id: data.user_id,
+            username
+        },
+            secretKey,
+        {
+            expiresIn: "15m"
+    })
+    res.status(200).json({message: "You have logged in!", token});
+    
+
 });
+
+module.exports = router

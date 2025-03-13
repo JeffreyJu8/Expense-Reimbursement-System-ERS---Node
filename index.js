@@ -3,15 +3,19 @@ const app = express();
 const AWS = require('aws-sdk');
 const dynamoDB = new AWS.DynamoDB.DocumentClient();
 const bodyParser = require("body-parser");
+const registerController = require("./controller/registerController");
+const loginController = require("./controller/loginController");
 
 const PORT = 3000;
 
-const registerController = require("./controller/registerController");
+
 
 // parse JSON request body
 app.use(express.json());
 
 app.use("/register", registerController);
+
+app.use("/login", loginController);
 
 
 app.listen(PORT, () => {
