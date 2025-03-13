@@ -13,20 +13,23 @@ const client = new DynamoDBClient({
 
 const documentClient = DynamoDBDocumentClient.from(client);
 
-async function registerEmployee(user){
+async function submitTicket(ticket){
     const command = new PutCommand({
-        TableName: 'Employee',
+        TableName: 'Employee_Tickets',
         Item: {
-            employee_id: user.employee_id,
-            username: user.username,
-            password: user.hashedPassword,
-            role: "employee"
+            id: ticket.id,
+            author: ticket.employee_id,
+            resolver: 0,
+            description: ticket.description,
+            type: ticket.type,
+            status: "pending",
+            amount: ticket.amount
         }
     });
 
     try{
         await documentClient.send(command);
-        return user;
+        return ticket;
     }
     catch(err){
         console.error(err);
@@ -34,4 +37,4 @@ async function registerEmployee(user){
     }
 }
 
-module.exports = { registerEmployee };
+module.exports = { submitTicket };
