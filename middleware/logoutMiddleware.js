@@ -27,8 +27,8 @@ async function authenticateToken(req, res, next){
     if(!token){
         return res.status(403).json({message: "You are not logged in!"});
     }else{
-        req.id = user.id;
-        console.log("employee_id: ", req.id);
+        // req.id = user.id;
+        // console.log("employee_id: ", req.id);
         // req.user = user;
         next();
     }
