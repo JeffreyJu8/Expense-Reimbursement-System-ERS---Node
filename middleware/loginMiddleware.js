@@ -26,7 +26,7 @@ async function validateLoginMiddleware(req, res, next){
     const isUsernameValid = await validateUsername(jsonBody);
     if(!isUsernameValid){
         return res.status(400).json({
-            message: "Username already exist!"
+            message: "Username does not exist"
         });
     }
 

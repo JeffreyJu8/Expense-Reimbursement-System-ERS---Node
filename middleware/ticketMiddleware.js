@@ -53,48 +53,26 @@ async function decodeJWT(token){
 async function validateTicketMiddleware(req, res, next){
     const jsonBody = req.body;
     
-    // employee_id, description, type, amount
-    if(!validateAuthor(jsonBody)){
-        return res.status(400).json({
-            message: "Please login before submitting a ticket!"
-        });
-    }
-
-    if(!validateDescription(jsonBody)){
+    // description, type, amount
+    if(!jsonBody.description){
         return res.status(400).json({
             message: "Please put in a description!"
         });
     }
 
-    if(!validateType(jsonBody)){
+    if(!jsonBody.type){
         return res.status(400).json({
             message: "Please indicate the type!"
         });
     }
 
-    if(!validateAmount(jsonBody)){
+    if(!jsonBody.amount){
         return res.status(400).json({
             message: "Please indicate amount!"
         });
     }
 
     next();
-}
-
-async function validateAuthor(data){
-    return (data.employee_id);
-}
-
-async function validateDescription(data){
-    return (data.description);
-}
-
-async function validateType(data){
-    return (data.type);
-}
-
-async function validateAmount(data){
-    return (data.amount);
 }
 
 
