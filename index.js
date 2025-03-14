@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const registerController = require("./controller/registerController");
 const loginController = require("./controller/loginController");
 const submitTicketController = require("./controller/submitTicketController");
+const logoutController = require("./controller/logoutController")
 const {authenticateToken} = require("./util/jwt");
 
 const PORT = 3000;
@@ -21,9 +22,11 @@ app.use("/login", loginController);
 
 app.use("/tickets", authenticateToken, submitTicketController);
 
-app.get("/protected", authenticateToken, (req, res) => {
-    res.json({message: "Accessed Protected Route", user: req.user});
-})
+app.use("/logout", logoutController);
+
+// app.get("/protected", authenticateToken, (req, res) => {
+//     res.json({message: "Accessed Protected Route", user: req.user});
+// })
 
 
 app.listen(PORT, () => {
