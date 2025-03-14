@@ -23,4 +23,15 @@ router.post("/", validateTicketMiddleware, authenticateToken, async (req, res) =
 });
 
 
+router.get("/", async(req,res) => {
+    const { status } = req.query;
+
+    if(status === "pending"){
+        const data = await ticketService.getPendingTickets();
+
+        res.status(201).json({message: "Pending Tickets: ", Ticket: data});
+    }
+})
+
+
 module.exports = router;

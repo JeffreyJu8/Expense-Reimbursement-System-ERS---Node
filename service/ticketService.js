@@ -12,4 +12,14 @@ async function submitTicket({id, employee_id, description, type, amount}){
     return {message: "Ticket submitted successfully", Ticket: result};
 }
 
-module.exports = { submitTicket };
+async function getPendingTickets(){
+    const result = await ticketDAO.getPendingTickets();
+
+    if(!result){
+        return {message: "No tickets are pending!"};
+    }
+
+    return {message: "Pending Tickets: ", Tickets: result};
+}
+
+module.exports = { submitTicket, getPendingTickets };

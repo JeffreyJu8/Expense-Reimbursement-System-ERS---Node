@@ -1,5 +1,5 @@
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
-const { DynamoDBDocumentClient, GetCommand, PutCommand, DeleteCommand } = require("@aws-sdk/lib-dynamodb");
+const { DynamoDBDocumentClient, GetCommand, PutCommand, DeleteCommand, QueryCommand } = require("@aws-sdk/lib-dynamodb");
 const AWS = require("aws-sdk");
 require("dotenv").config();
 
@@ -37,4 +37,28 @@ async function submitTicket(ticket){
     }
 }
 
-module.exports = { submitTicket };
+
+async function getPendingTickets(){
+    const params = {
+        TableName: "Employee_Tickets",
+        IndexName: "status-index",
+        KeyConditionExpression: "#status = :statusVal",
+        ExpressionAttributeNames: {
+          "#status": "status",
+        },
+        ExpressionAttributeValues: {
+            ":statusVal": "pending"
+        }
+    }
+
+    try{
+        const result = await documentClient.send(new QueryCommand(params));
+        console.log("Pending Tickets: ", result.Items);
+        return result.Items;
+    }
+    catch(err){
+        console.error(err);
+        return null;
+    }
+}
+module.exports = { submitTicket, getPendingTickets };
