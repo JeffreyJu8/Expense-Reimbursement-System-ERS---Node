@@ -1,5 +1,5 @@
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
-const { DynamoDBDocumentClient, GetCommand, PutCommand, DeleteCommand, QueryCommand } = require("@aws-sdk/lib-dynamodb");
+const { DynamoDBDocumentClient, GetCommand, PutCommand, DeleteCommand, QueryCommand, UpdateCommand } = require("@aws-sdk/lib-dynamodb");
 const AWS = require("aws-sdk");
 require("dotenv").config();
 
@@ -61,4 +61,25 @@ async function getPendingTickets(){
         return null;
     }
 }
-module.exports = { submitTicket, getPendingTickets };
+
+async function updateTicketStatus(id, newStatus) {
+    const command = new UpdateCommand({
+        TableName: "Employee_Tickets",
+        Key: { "id": id },
+        UpdateExpression: "SET #status = :statusVal",
+        ExpressionAttributeNames: { "#status": "status"},
+        ExpressionAttributeValues: { ":statusVal": newStatus},
+        ReturnValues: "UPDATED_NEW"
+    })
+
+    try{
+        const result = await documentClient.send(command);
+        return result;
+    }
+    catch(err){
+        console.error(err);
+
+    }
+}
+
+module.exports = { submitTicket, getPendingTickets, updateTicketStatus };

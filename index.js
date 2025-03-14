@@ -5,7 +5,7 @@ const dynamoDB = new AWS.DynamoDB.DocumentClient();
 const bodyParser = require("body-parser");
 const registerController = require("./controller/registerController");
 const loginController = require("./controller/loginController");
-const submitTicketController = require("./controller/submitTicketController");
+const ticketController = require("./controller/ticketController");
 const logoutController = require("./controller/logoutController")
 const {authenticateToken} = require("./util/jwt");
 
@@ -20,7 +20,7 @@ app.use("/register", registerController);
 
 app.use("/login", loginController);
 
-app.use("/tickets", authenticateToken, submitTicketController);
+app.use("/tickets", authenticateToken, ticketController);
 
 app.use("/logout", logoutController);
 
