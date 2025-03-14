@@ -62,15 +62,21 @@ async function getPendingTickets(){
     }
 }
 
-async function updateTicketStatus(id, newStatus) {
+async function updateTicketStatus(id, newStatus, resolverId) {
     const command = new UpdateCommand({
         TableName: "Employee_Tickets",
         Key: { "id": id },
-        UpdateExpression: "SET #status = :statusVal",
-        ExpressionAttributeNames: { "#status": "status"},
-        ExpressionAttributeValues: { ":statusVal": newStatus},
+        UpdateExpression: "SET #status = :statusVal, #resolver = :resolverId",
+        ExpressionAttributeNames: { 
+            "#status": "status",
+            "#resolver": "resolver"
+        },
+        ExpressionAttributeValues: { 
+            ":statusVal": newStatus,
+            ":resolverId": resolverId
+        },
         ReturnValues: "UPDATED_NEW"
-    })
+    });
 
     try{
         const result = await documentClient.send(command);

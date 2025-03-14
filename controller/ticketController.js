@@ -45,7 +45,7 @@ router.put("/:id", authenticateToken, async(req,res) => {
         return res.status(403).json({message: "You are not authorized!"});
     }
 
-    const result = await ticketService.updateTicketStatus(id, status);
+    const result = await ticketService.updateTicketStatus(id, status, req.id);
 
     if(!result){
         return res.status(401).json({message: "Failed to update ticket status!"});
