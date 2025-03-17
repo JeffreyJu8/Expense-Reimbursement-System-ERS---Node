@@ -164,7 +164,7 @@ async function updateTicketStatus(id, newStatus, resolverId) {
 }
 
 async function getEmployeeTickets(id){
-    console.log("id", id)
+    // console.log("id", id)
     const params = {
         TableName: "Employee_Tickets",
         IndexName: "author-index",
@@ -179,7 +179,7 @@ async function getEmployeeTickets(id){
 
     try{
         const result = await documentClient.send(new QueryCommand(params));
-        console.log("results: ", result);
+        // console.log("results: ", result);
         return result;
     }
     catch(err){
@@ -188,4 +188,15 @@ async function getEmployeeTickets(id){
     }
 }
 
-module.exports = { submitTicket, getPendingTickets, updateTicketStatus, getEmployeeTickets };
+async function getTicketsByType(ticketType, id){
+    const employeeTickets = await getEmployeeTickets(id);
+    // console.log("employee tickets: ", employeeTickets.Items);
+    const tickets = employeeTickets.Items;
+
+    const result = tickets.filter(function (n) {return n.type === ticketType});
+
+    console.log("type results: ", result);
+    return result;
+}
+
+module.exports = { submitTicket, getPendingTickets, updateTicketStatus, getEmployeeTickets, getTicketsByType };

@@ -86,4 +86,14 @@ async function getEmployeeTickets(id){
     return result;
 }
 
-module.exports = { submitTicket, getPendingTickets, updateTicketStatus, getUserRole, updateTicketStatus, getEmployeeTickets };
+async function getTicketsByType(type, id){
+    const result = await ticketDAO.getTicketsByType(type, id);
+    
+    if(!result){
+        return false;
+    }
+
+    return result;
+}
+
+module.exports = { submitTicket, getPendingTickets, updateTicketStatus, getUserRole, updateTicketStatus, getEmployeeTickets, getTicketsByType };

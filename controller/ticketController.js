@@ -25,6 +25,7 @@ router.post("/", validateTicketMiddleware, authenticateToken, async (req, res) =
 
 router.get("/", authenticateToken, async(req,res) => {
     const { status } = req.query;
+    const { type } = req.query;
 
     if(status === "pending"){
         // console.log("curr id: ", req.id);
@@ -36,12 +37,18 @@ router.get("/", authenticateToken, async(req,res) => {
 
         const data = await ticketService.getPendingTickets();
 
-        res.status(201).json({message: "Pending Tickets: ", Ticket: data});
+        return res.status(201).json({message: "Pending Tickets: ", Ticket: data});
+    }
+
+    else if( type !== undefined){
+        const data = await ticketService.getTicketsByType(type, req.id);
+
+        return res.status(201).json({message: "Tickets: ", Ticket: data});
     }
 
     else{
         const data = await ticketService.getEmployeeTickets(req.id);
-        res.status(201).json({message: "All Tickets: ", Tickets: data.Items});
+        return res.status(201).json({message: "All Tickets: ", Tickets: data.Items});
     }
 })
 
