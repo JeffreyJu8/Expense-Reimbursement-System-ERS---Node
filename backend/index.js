@@ -9,13 +9,14 @@ const ticketController = require("./controller/ticketController");
 const logoutController = require("./controller/logoutController");
 const userController = require("./controller/userController");
 const {authenticateToken} = require("./util/jwt");
+const cors = require("cors");
 
 const PORT = 3000;
 
 
-
-// parse JSON request body
 app.use(express.json());
+app.use(cors());
+
 
 app.use("/register", registerController);
 

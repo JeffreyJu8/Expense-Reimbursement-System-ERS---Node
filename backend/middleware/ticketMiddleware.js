@@ -1,20 +1,20 @@
-const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
-require("dotenv").config();
-const { DynamoDBDocumentClient, QueryCommand } = require("@aws-sdk/lib-dynamodb");
+// const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+// require("dotenv").config();
+// const { DynamoDBDocumentClient, QueryCommand } = require("@aws-sdk/lib-dynamodb");
 const jwt = require("jsonwebtoken");
 
 const secretKey = "my-secret-key";
 
 
-const client = new DynamoDBClient({
-    region: process.env.AWS_DEFAULT_REGION,
-    credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-    },
-});
+// const client = new DynamoDBClient({
+//     region: process.env.AWS_DEFAULT_REGION,
+//     credentials: {
+//         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+//         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+//     },
+// });
 
-const documentClient = DynamoDBDocumentClient.from(client);
+// const documentClient = DynamoDBDocumentClient.from(client);
 
 async function authenticateToken(req, res, next){
 
@@ -26,7 +26,8 @@ async function authenticateToken(req, res, next){
 
     if(!token){
         return res.status(403).json({message: "Forbidden Access"});
-    }else{
+    }
+    else{
         const user = await decodeJWT(token);
         //console.log("Decoded User:", user);
 
