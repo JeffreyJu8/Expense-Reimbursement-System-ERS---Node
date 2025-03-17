@@ -23,13 +23,25 @@ router.post("/", validateTicketMiddleware, authenticateToken, async (req, res) =
 });
 
 
-router.get("/", async(req,res) => {
+router.get("/", authenticateToken, async(req,res) => {
     const { status } = req.query;
 
     if(status === "pending"){
+        // console.log("curr id: ", req.id);
+        const currRole = await ticketService.getUserRole(req.id);
+
+        if(currRole === "employee"){
+            return res.status(403).json({message: "You are not authorized to view!"});
+        }
+
         const data = await ticketService.getPendingTickets();
 
         res.status(201).json({message: "Pending Tickets: ", Ticket: data});
+    }
+
+    else{
+        const data = await ticketService.getEmployeeTickets(req.id);
+        res.status(201).json({message: "All Tickets: ", Tickets: data.Items});
     }
 })
 

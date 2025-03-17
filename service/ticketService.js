@@ -76,4 +76,14 @@ async function updateTicketStatus(id, newStatus, resolverId){
     return true;
 }
 
-module.exports = { submitTicket, getPendingTickets, updateTicketStatus, getUserRole, updateTicketStatus };
+async function getEmployeeTickets(id){
+    const result = await ticketDAO.getEmployeeTickets(id);
+    
+    if(!result){
+        return false;
+    }
+
+    return result;
+}
+
+module.exports = { submitTicket, getPendingTickets, updateTicketStatus, getUserRole, updateTicketStatus, getEmployeeTickets };

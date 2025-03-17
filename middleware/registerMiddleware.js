@@ -26,7 +26,13 @@ async function validateRegisterMiddleware(req, res, next){
     const isUsernameValid = await validateUsername(jsonBody);
     if(!isUsernameValid){
         return res.status(400).json({
-            message: "Username already exist!"
+            message: "Username invalid"
+        });
+    }
+
+    if(!jsonBody.password){
+        return res.status(400).json({
+            message: "Invalid password!"
         });
     }
 

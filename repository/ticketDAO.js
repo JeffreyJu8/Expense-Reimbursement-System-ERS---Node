@@ -163,4 +163,29 @@ async function updateTicketStatus(id, newStatus, resolverId) {
     // }
 }
 
-module.exports = { submitTicket, getPendingTickets, updateTicketStatus };
+async function getEmployeeTickets(id){
+    console.log("id", id)
+    const params = {
+        TableName: "Employee_Tickets",
+        IndexName: "author-index",
+        KeyConditionExpression: "#author = :authorVal",
+        ExpressionAttributeNames: {
+          "#author": "author",
+        },
+        ExpressionAttributeValues: {
+            ":authorVal": id
+        }
+    }
+
+    try{
+        const result = await documentClient.send(new QueryCommand(params));
+        console.log("results: ", result);
+        return result;
+    }
+    catch(err){
+        console.error(err);
+        return null;
+    }
+}
+
+module.exports = { submitTicket, getPendingTickets, updateTicketStatus, getEmployeeTickets };
