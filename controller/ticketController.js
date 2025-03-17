@@ -37,7 +37,7 @@ router.put("/:id", authenticateToken, async(req,res) => {
     const { id } = req.params;
     const { status } = req.body;
 
-    console.log("Authorization employee_id: ", req.id);
+    // console.log("Authorization employee_id: ", req.id);
 
     const currRole = await ticketService.getUserRole(req.id);
 
@@ -46,6 +46,8 @@ router.put("/:id", authenticateToken, async(req,res) => {
     }
 
     const result = await ticketService.updateTicketStatus(id, status, req.id);
+
+    // console.log("result: ", result);
 
     if(!result){
         return res.status(401).json({message: "Failed to update ticket status!"});

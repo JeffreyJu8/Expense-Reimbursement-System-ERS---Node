@@ -67,9 +67,9 @@ async function getUserRole(id){
 
 
 async function updateTicketStatus(id, newStatus, resolverId){
-    const result = ticketDAO.updateTicketStatus(id, newStatus, resolverId);
+    const result = await ticketDAO.updateTicketStatus(id, newStatus, resolverId);
 
-    if(!result){
+    if(result === null){
         return false
     }
 

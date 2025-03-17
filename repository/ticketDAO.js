@@ -53,7 +53,7 @@ async function getPendingTickets(){
 
     try{
         const result = await documentClient.send(new QueryCommand(params));
-        console.log("Pending Tickets: ", result.Items);
+        // console.log("Pending Tickets: ", result.Items);
         return result.Items;
     }
     catch(err){
@@ -62,7 +62,31 @@ async function getPendingTickets(){
     }
 }
 
+
+async function getTicketById(id){
+    const command = new GetCommand({
+        TableName: "Employee_Tickets",
+        Key: {"id": id}
+    })
+
+    try{
+        const ticket = await documentClient.send(command);
+        return ticket;
+    }
+    catch(err){
+        console.error(err);
+    }
+}
+
 async function updateTicketStatus(id, newStatus, resolverId) {
+    const ticket = await getTicketById(id);
+    // console.log("ticket: ", ticket);
+    // console.log("ticket status: ", ticket.Item.status);
+    if (ticket.Item.status !== "pending"){
+        console.log("Processed tickets cannot be changed!");
+        return null;
+    }
+
     const command = new UpdateCommand({
         TableName: "Employee_Tickets",
         Key: { "id": id },
@@ -84,8 +108,59 @@ async function updateTicketStatus(id, newStatus, resolverId) {
     }
     catch(err){
         console.error(err);
-
+        return null;
     }
+
+    // const command = new DeleteCommand({
+    //     TableName: "Employee_Tickets",
+    //     Key: { "id": id },
+    //     UpdateExpression: "SET #status = :statusVal, #resolver = :resolverId",
+    //     ExpressionAttributeNames: { 
+    //         "#status": "status",
+    //         "#resolver": "resolver"
+    //     },
+    //     ExpressionAttributeValues: { 
+    //         ":statusVal": newStatus,
+    //         ":resolverId": resolverId
+    //     },
+    //     ReturnValues: "UPDATED_NEW"
+    // });
+
+    // const deleteCommand = new DeleteCommand({
+    //     TableName: "Employee_Tickets",
+    //     Key: {"id": id}
+    // });
+
+    // try{
+    //     await documentClient.send(deleteCommand);
+    // }
+    // catch(err){
+    //     console.error(err);
+    // }
+
+    // const newTicket = await getTicketById(id);
+
+    // const createCommand = new PutCommand({
+    //     TableName: "Processed_Tickts",
+    //     Item: {
+    //         id: newTicket.id,
+    //         author: newTicket.employee_id,
+    //         resolver: resolverId,
+    //         description: newTicket.description,
+    //         type: newTicket.type,
+    //         status: newStatus,
+    //         amount: newTicket.amount
+    //     }
+    // })
+
+
+    // try{
+    //     const createResult = await documentClient.send(createCommand);
+    //     return createResult;
+    // }
+    // catch(err){
+    //     console.error(err);
+    // }
 }
 
 module.exports = { submitTicket, getPendingTickets, updateTicketStatus };
