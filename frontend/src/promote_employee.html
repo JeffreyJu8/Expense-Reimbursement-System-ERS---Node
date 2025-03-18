@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promote/Demote Employee</title>
+    <script defer src="promote_employee.js"></script>
+</head>
+<body>
+    <h1>Promote/Demote Employee</h1>
+
+    <p id="role-message"></p>
+
+    <form id="role-form" style="display: none;">
+        <label for="employee-id">Employee ID:</label>
+        <input type="text" id="employee-id" name="employee-id" required>
+        <br><br>
+
+        <label for="role">New Role:</label>
+        <select id="role" name="role">
+            <option value="employee">Employee</option>
+            <option value="manager">Manager</option>
+        </select>
+        <br><br>
+
+        <button type="submit">Update Role</button>
+    </form>
+
+    <p id="message"></p>
+
+    <br>
+    <button onclick="goHome()">Back to Home</button>
+</body>
+</html>

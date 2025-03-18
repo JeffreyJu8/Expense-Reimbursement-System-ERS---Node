@@ -26,8 +26,16 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "view_pending_tickets.html";
         });
 
+        document.getElementById("view-ticket-by-type-btn").addEventListener("click", () => {
+            window.location.href = "view_tickets_by_type.html";
+        });
+
         document.getElementById("view-past-btn").addEventListener("click", () => {
             window.location.href = "view_past_tickets.html";
+        });
+
+        document.getElementById("all-employees-btn").addEventListener("click", () => {
+            window.location.href = "all_employees.html";
         });
 
         document.getElementById("promote-btn").addEventListener("click", () => {
