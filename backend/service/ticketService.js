@@ -33,7 +33,7 @@ async function getPendingTickets(){
         return {message: "No tickets are pending!"};
     }
 
-    return {message: "Pending Tickets: ", Tickets: result};
+    return {result};
 }
 
 

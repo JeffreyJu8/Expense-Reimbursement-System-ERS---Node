@@ -37,7 +37,7 @@ router.get("/", authenticateToken, async(req,res) => {
 
         const data = await ticketService.getPendingTickets();
 
-        return res.status(201).json({message: "Pending Tickets: ", Ticket: data});
+        return res.status(201).json(data);
     }
 
     else if( type !== undefined){
@@ -48,7 +48,7 @@ router.get("/", authenticateToken, async(req,res) => {
 
     else{
         const data = await ticketService.getEmployeeTickets(req.id);
-        return res.status(201).json({message: "All Tickets: ", Tickets: data.Items});
+        return res.status(201).json({Tickets: data.Items});
     }
 })
 

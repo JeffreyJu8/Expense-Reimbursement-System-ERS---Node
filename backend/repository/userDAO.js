@@ -1,5 +1,5 @@
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
-const { DynamoDBDocumentClient, UpdateCommand } = require("@aws-sdk/lib-dynamodb");
+const { DynamoDBDocumentClient, UpdateCommand, ScanCommand } = require("@aws-sdk/lib-dynamodb");
 const AWS = require("aws-sdk");
 require("dotenv").config();
 
@@ -32,4 +32,20 @@ async function updateEmployeeRole(id, newRole){
     }
 }
 
-module.exports = { updateEmployeeRole };
+async function getAllEmployee(){
+    const command = new ScanCommand({
+        TableName: "Employee"
+    });
+
+    try{
+        const result = await documentClient.send(command);
+        console.log(result);
+        return result.Items;
+    }
+    catch(err){
+        console.log(err);
+        return null;
+    }
+}
+
+module.exports = { updateEmployeeRole, getAllEmployee };

@@ -24,4 +24,10 @@ router.put("/", validateUserMiddleware, authenticateToken, async (req, res) => {
 });
 
 
+router.get("/", async (req, res) => {
+    const data = await userService.getAllEmployee();
+
+    res.status(201).json(data);
+})
+
 module.exports = router;

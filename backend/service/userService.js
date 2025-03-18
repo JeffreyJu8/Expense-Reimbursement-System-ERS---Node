@@ -10,4 +10,10 @@ async function updateEmployeeRole(id, newRole){
     return result;
 }
 
-module.exports = { updateEmployeeRole };
+async function getAllEmployee(){
+    const result = await userDAO.getAllEmployee();
+
+    return result;
+}
+
+module.exports = { updateEmployeeRole, getAllEmployee };
