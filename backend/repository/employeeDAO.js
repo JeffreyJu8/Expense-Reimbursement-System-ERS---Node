@@ -1,5 +1,5 @@
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
-const { DynamoDBDocumentClient, GetCommand, PutCommand, DeleteCommand } = require("@aws-sdk/lib-dynamodb");
+const { DynamoDBDocumentClient, UpdateCommand, PutCommand, ScanCommand, QueryCommand } = require("@aws-sdk/lib-dynamodb");
 const AWS = require("aws-sdk");
 require("dotenv").config();
 
@@ -34,4 +34,65 @@ async function registerEmployee(user){
     }
 }
 
-module.exports = { registerEmployee };
+async function updateEmployeeRole(id, newRole){
+    const command = new UpdateCommand ({
+        TableName: "Employee",
+        Key: {"employee_id": id},
+        UpdateExpression: "SET #role = :role",
+        ExpressionAttributeNames: {"#role": "role"},
+        ExpressionAttributeValues: {":role": newRole}
+    })
+
+    try{
+        const result = documentClient.send(command);
+        return result;
+    }
+    catch(err){
+        console.error(err);
+        return null;
+    }
+}
+
+async function getAllEmployee(){
+    const command = new ScanCommand({
+        TableName: "Employee"
+    });
+
+    try{
+        const result = await documentClient.send(command);
+        console.log(result);
+        return result.Items;
+    }
+    catch(err){
+        console.log(err);
+        return null;
+    }
+}
+
+async function getUser(username){
+    const params = {
+        TableName: "Employee",
+        IndexName: "username-index", 
+        KeyConditionExpression: "username = :username",
+        ExpressionAttributeValues: {
+          ":username": username,
+        },
+      };
+
+      try {
+        const result = await documentClient.send(new QueryCommand(params));
+        // console.log("Header result:", result);
+        if (result.Items || result.Items.length > 0) {
+            return result.Items[0]; // Return existing user
+          }
+        else{
+            return null;
+        }
+      } 
+      catch (error) {
+        console.error("Error querying:", error);
+        return null;
+      }
+}
+
+module.exports = { registerEmployee, updateEmployeeRole, getAllEmployee, getUser };

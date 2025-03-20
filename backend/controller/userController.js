@@ -1,9 +1,8 @@
 require("dotenv").config();
-const AWS = require("aws-sdk");
 const express = require("express");
 const router = express.Router();
 const ticketService = require("../service/ticketService");
-const userService = require("../service/userService");
+const employeeService = require("../service/employeeService");
 const { validateUserMiddleware, authenticateToken } = require("../middleware/userMiddleware");
 
 
@@ -18,14 +17,14 @@ router.put("/", validateUserMiddleware, authenticateToken, async (req, res) => {
     }
 
     // console.log("id, newRole: ", id, role);
-    const data = await userService.updateEmployeeRole(id, role);
+    const data = await employeeService.updateEmployeeRole(id, role);
 
     res.status(201).json({message: "Employee Role Updated ", Employee: data});
 });
 
 
 router.get("/", async (req, res) => {
-    const data = await userService.getAllEmployee();
+    const data = await employeeService.getAllEmployee();
 
     res.status(201).json(data);
 })
