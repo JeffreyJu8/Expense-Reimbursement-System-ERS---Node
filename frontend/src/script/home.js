@@ -6,12 +6,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const authButtons = document.getElementById("auth-buttons");
     const userActions = document.getElementById("user-actions");
+    const userProfile = document.getElementById("profile-btn");
     const welcomeMessage = document.getElementById("welcome-message");
 
     if (token) {
         // logged in
         authButtons.style.display = "none";
         userActions.style.display = "block";
+        userProfile.style.display = "block";
         welcomeMessage.textContent = `Welcome, ${username}!`;
 
         document.getElementById("create-ticket-btn").addEventListener("click", () => {
@@ -42,11 +44,16 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "promote_employee.html";
         });
 
+        document.getElementById("profile-btn").addEventListener("click", () => {
+            window.location.href = "profile.html";
+        });
+
         document.getElementById("logout-btn").addEventListener("click", logout);
     } 
     else {
         authButtons.style.display = "block";
         userActions.style.display = "none";
+        userProfile.style.display = "none";
         welcomeMessage.textContent = "Please log in to access more features.";
 
         document.getElementById("login-btn").addEventListener("click", login);

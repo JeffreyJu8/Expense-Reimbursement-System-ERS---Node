@@ -30,4 +30,12 @@ router.get("/", async (req, res) => {
     res.status(201).json(data);
 })
 
+
+router.get(`/:username`, authenticateToken, async (req, res) => {
+    const { username } = req.params;
+    const data = await employeeService.getUser(username);
+
+    res.status(201).json(data);
+})
+
 module.exports = router;
