@@ -5,30 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Promote/Demote Employee</title>
     <script defer src="promote_employee.js"></script>
+    <link rel="stylesheet" href="promote_employee.css">
 </head>
 <body>
-    <h1>Promote/Demote Employee</h1>
+    <div class="container">
+        <h1>Promote/Demote Employee</h1>
 
-    <p id="role-message"></p>
+        <p id="role-message"></p>
 
-    <form id="role-form" style="display: none;">
-        <label for="employee-id">Employee ID:</label>
-        <input type="text" id="employee-id" name="employee-id" required>
-        <br><br>
+        <form id="role-form" style="display: none;">
+            <label for="employee-id">Employee ID:</label>
+            <input type="text" id="employee-id" name="employee-id" required>
 
-        <label for="role">New Role:</label>
-        <select id="role" name="role">
-            <option value="employee">Employee</option>
-            <option value="manager">Manager</option>
-        </select>
-        <br><br>
+            <label for="role">New Role:</label>
+            <select id="role" name="role">
+                <option value="employee">Employee</option>
+                <option value="manager">Manager</option>
+            </select>
 
-        <button type="submit">Update Role</button>
-    </form>
+            <button type="submit">Update Role</button>
+        </form>
 
-    <p id="message"></p>
+        <p id="message"></p>
 
-    <br>
-    <button onclick="goHome()">Back to Home</button>
+        <button class="back-button" onclick="goHome()">Back to Home</button>
+    </div>
 </body>
+
 </html>

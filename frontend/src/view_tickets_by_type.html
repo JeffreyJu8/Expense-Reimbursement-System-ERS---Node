@@ -5,32 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Tickets by Type</title>
     <script defer src="view_tickets_by_type.js"></script>
+    <link rel="stylesheet" href="view_tickets_by_type.css">
 </head>
 <body>
-    <h1>View Tickets by Type</h1>
+    <div class="container">
+        <h1>View Tickets by Type</h1>
 
-    <form id="search-form">
-        <label for="ticket-type">Enter Ticket Type:</label>
-        <input type="text" id="ticket-type" name="ticket-type" required>
-        <button type="submit">Search</button>
-    </form>
+        <form id="search-form">
+            <label for="ticket-type">Enter Ticket Type:</label>
+            <input type="text" id="ticket-type" name="ticket-type" required>
+            <button type="submit">Search</button>
+        </form>
 
-    <p id="message"></p>
+        <p id="message"></p>
 
-    <table border="1" id="tickets-table" style="display: none;">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Amount</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+        <table id="tickets-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
 
-    <br>
-    <button onclick="goHome()">Back to Home</button>
+        <button class="back-button" onclick="goHome()">Back to Home</button>
+    </div>
 </body>
+
 </html>

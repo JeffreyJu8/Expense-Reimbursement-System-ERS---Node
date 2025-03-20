@@ -5,27 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Past Tickets</title>
     <script defer src="view_past_tickets.js"></script>
+    <link rel="stylesheet" href="view_past_tickets.css">
 </head>
 <body>
-    <h1>Past Tickets</h1>
-    
-    <p id="message"></p>
+    <div class="container">
+        <h1>Past Tickets</h1>
+        
+        <p id="message"></p>
 
-    <table border="1" id="tickets-table" style="display: none;">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Amount</th>
-                <th>Status</th>
-                <th>Resolver</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+        <table id="tickets-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Resolver</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
 
-    <br>
-    <button onclick="goHome()">Back to Home</button>
+        <button class="back-button" onclick="goHome()">Back to Home</button>
+    </div>
 </body>
+
 </html>

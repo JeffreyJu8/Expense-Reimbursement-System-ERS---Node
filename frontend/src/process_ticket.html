@@ -5,30 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Process Ticket</title>
     <script defer src="process_ticket.js"></script>
+    <link rel="stylesheet" href="process_ticket.css">
 </head>
+
 <body>
-    <h1>Process a Ticket</h1>
+    <div class="container">
+        <h1>Process a Ticket</h1>
 
-    <p id="role-message"></p>
+        <p id="role-message"></p>
 
-    <form id="ticket-form">
-        <label for="ticket-id">Ticket ID:</label>
-        <input type="text" id="ticket-id" name="ticket-id" required>
-        <br><br>
+        <form id="ticket-form">
+            <label for="ticket-id">Ticket ID:</label>
+            <input type="text" id="ticket-id" name="ticket-id" required>
 
-        <label for="status">New Status:</label>
-        <select id="status" name="status">
-            <option value="approved">Approved</option>
-            <option value="denied">Denied</option>
-        </select>
-        <br><br>
+            <label for="status">New Status:</label>
+            <select id="status" name="status">
+                <option value="approved">Approved</option>
+                <option value="denied">Denied</option>
+            </select>
 
-        <button type="submit">Update Ticket</button>
-    </form>
+            <button type="submit">Update Ticket</button>
+        </form>
 
-    <p id="message"></p>
+        <p id="message"></p>
 
-    <br>
-    <button onclick="goHome()">Back to Home</button>
+        <button class="back-button" onclick="goHome()">Back to Home</button>
+    </div>
 </body>
+
 </html>

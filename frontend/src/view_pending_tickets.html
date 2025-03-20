@@ -5,27 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Pending Tickets</title>
     <script defer src="view_pending_tickets.js"></script>
+    <link rel="stylesheet" href="view_pending_tickets.css">
 </head>
+
 <body>
-    <h1>Pending Tickets</h1>
-    
-    <p id="message"></p>
+    <div class="container">
+        <h1>Pending Tickets</h1>
+        
+        <p id="message"></p>
 
-    <table border="1" id="tickets-table" style="display: none;">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Author</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Amount</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+        <table id="tickets-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Author</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
 
-    <br>
-    <button onclick="goHome()">Back to Home</button>
+        <button class="back-button" onclick="goHome()">Back to Home</button>
+    </div>
 </body>
+
 </html>

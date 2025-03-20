@@ -5,28 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <script defer src="./home.js"></script>
+    <link rel="stylesheet" href="home.css">
+
 </head>
 <body>
-    <h1>Welcome</h1>
+    <div class="container">
+        <h1>Welcome</h1>
 
-    <div id="auth-buttons">
-        <button id="login-btn">Login</button>
-        <button id="register-btn">Register</button>
+        <div id="auth-buttons">
+            <button id="login-btn">Login</button>
+            <button id="register-btn">Register</button>
+        </div>
+
+        <div id="user-actions" style="display: none;">
+            <button id="create-ticket-btn">Create a Ticket</button>
+            <button id="process-ticket-btn">Process a Ticket</button>
+            <button id="view-pending-btn">View Pending Tickets</button>
+            <button id="view-ticket-by-type-btn">View Tickets by Type</button>
+            <button id="view-past-btn">View Past Tickets</button>
+            <button id="all-employees-btn">View All Employees</button>
+            <button id="promote-btn">Promote/Demote an Employee</button>
+            <button id="logout-btn">Logout</button>
+        </div>
+
+        <p id="welcome-message"></p>
+
+        <hr>
     </div>
-
-    <div id="user-actions" style="display: none;">
-        <button id="create-ticket-btn">Create a Ticket</button>
-        <button id="process-ticket-btn">Process a Ticket</button>
-        <button id="view-pending-btn">View Pending Tickets</button>
-        <button id="view-ticket-by-type-btn">View Tickets by Type</button>
-        <button id="view-past-btn">View Past Tickets</button>
-        <button id="all-employees-btn">View All Employees</button>
-        <button id="promote-btn">Promote/Demote an Employee</button>
-        <button id="logout-btn">Logout</button>
-    </div>
-
-    <p id="welcome-message"></p>
-
-    <hr>
 </body>
+
 </html>
