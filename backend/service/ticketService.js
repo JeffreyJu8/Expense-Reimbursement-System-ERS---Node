@@ -37,32 +37,14 @@ async function getPendingTickets(){
 }
 
 
-// async function updateTicketStatus(id){
-//     const result = await ticketDAO.updateTicketStatus(id);
-// }
-
-
 async function getUserRole(id){
-    console.log("received id: ", id)
-    const params = {
-        TableName: "Employee",
-        KeyConditionExpression: "#employee_id = :id",
-        ExpressionAttributeNames: {
-          "#employee_id": "employee_id",
-        },
-        ExpressionAttributeValues: {
-            ":id": id
-        }
-    }
+    const result = await ticketDAO.getUserRole(id);
 
-    try{
-        const result = await documentClient.send(new QueryCommand(params));
-        return result.Items[0].role;
-    }
-    catch(err){
-        console.error(err);
+    if(!result){
         return null;
     }
+
+    return result;
 }
 
 

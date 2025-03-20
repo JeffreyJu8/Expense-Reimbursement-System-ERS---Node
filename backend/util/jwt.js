@@ -31,6 +31,4 @@ async function decodeJWT(token){
     }
 }
 
-module.exports = {
-    authenticateToken
-}
+module.exports = authenticateToken

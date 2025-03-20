@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { authenticateToken } = require("../middleware/loginMiddleware");
+const authenticateToken = require("../util/jwt");
 
 
 router.post("/", authenticateToken, (req, res) => {

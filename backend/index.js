@@ -22,7 +22,7 @@ app.use("/register", registerController);
 
 app.use("/login", loginController);
 
-app.use("/tickets", authenticateToken, ticketController);
+app.use("/tickets", ticketController);
 
 app.use("/logout", logoutController);
 

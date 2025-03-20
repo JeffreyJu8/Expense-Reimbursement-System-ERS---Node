@@ -28,24 +28,6 @@ async function validateLoginMiddleware(req, res, next){
     next();
 }
 
-async function authenticateToken(req, res, next){
-
-    // authorization: "Bearer tokenstring"
-    const authHeader = req.headers["authorization"];
-    const token = authHeader && authHeader.split(" ")[1];
-
-    //console.log("Received Token:", token); 
-
-    if(!token){
-        return res.status(403).json({message: "You are not logged in!"});
-    }else{
-        // req.id = user.id;
-        // console.log("employee_id: ", req.id);
-        // req.user = user;
-        next();
-    }
-}
-
 
 async function validateLogin(data){
     return (data.username && data.password)
@@ -72,7 +54,4 @@ async function validatePassword(data){
     }
 }
 
-module.exports = {
-    validateLoginMiddleware,
-    authenticateToken
-};
+module.exports = validateLoginMiddleware;

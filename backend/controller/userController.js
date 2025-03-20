@@ -3,7 +3,8 @@ const express = require("express");
 const router = express.Router();
 const ticketService = require("../service/ticketService");
 const employeeService = require("../service/employeeService");
-const { validateUserMiddleware, authenticateToken } = require("../middleware/userMiddleware");
+const validateUserMiddleware = require("../middleware/userMiddleware");
+const authenticateToken = require("../util/jwt");
 
 
 

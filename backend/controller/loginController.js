@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { validateLoginMiddleware } = require("../middleware/loginMiddleware");
+const validateLoginMiddleware = require("../middleware/loginMiddleware");
 const jwt = require('jsonwebtoken');
 const employeeService = require("../service/employeeService");
 

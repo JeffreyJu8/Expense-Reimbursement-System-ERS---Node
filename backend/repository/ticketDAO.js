@@ -86,7 +86,7 @@ async function updateTicketStatus(id, newStatus, resolverId) {
         console.log("Ticket not found!");
         return null;
     }
-    
+
     if (ticket.Item.status !== "pending"){
         console.log("Processed tickets cannot be changed!");
         return null;
@@ -204,4 +204,27 @@ async function getTicketsByType(ticketType, id){
     return result;
 }
 
-module.exports = { submitTicket, getPendingTickets, updateTicketStatus, getEmployeeTickets, getTicketsByType };
+
+async function getUserRole(id){
+    console.log("received id: ", id)
+    const params = {
+        TableName: "Employee",
+        KeyConditionExpression: "#employee_id = :id",
+        ExpressionAttributeNames: {
+          "#employee_id": "employee_id",
+        },
+        ExpressionAttributeValues: {
+            ":id": id
+        }
+    }
+
+    try{
+        const result = await documentClient.send(new QueryCommand(params));
+        return result.Items[0].role;
+    }
+    catch(err){
+        console.error(err);
+        return null;
+    }
+}
+module.exports = { submitTicket, getPendingTickets, updateTicketStatus, getEmployeeTickets, getTicketsByType, getUserRole };

@@ -4,7 +4,8 @@ const express = require("express");
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 const ticketService = require("../service/ticketService");
-const { validateTicketMiddleware, authenticateToken } = require("../middleware/ticketMiddleware");
+const validateTicketMiddleware = require("../middleware/ticketMiddleware");
+const authenticateToken = require("../util/jwt");
 
 
 
@@ -15,7 +16,7 @@ router.post("/", validateTicketMiddleware, authenticateToken, async (req, res) =
     // get id from uuid
     // get employee_id from whoever is logged in
     // console.log("Requested employee_id: ", req.id);
-    const newTicket = { id: uuidv4(), employee_id: req.id, description, type, amount };
+    const newTicket = { id: uuidv4(), employee_id: req.user.id, description, type, amount };
 
     const data = await ticketService.submitTicket(newTicket);
 
@@ -29,7 +30,7 @@ router.get("/", authenticateToken, async(req,res) => {
 
     if(status === "pending"){
         // console.log("curr id: ", req.id);
-        const currRole = await ticketService.getUserRole(req.id);
+        const currRole = await ticketService.getUserRole(req.user.id);
 
         if(currRole === "employee"){
             return res.status(403).json({message: "You are not authorized to view!"});
@@ -41,13 +42,13 @@ router.get("/", authenticateToken, async(req,res) => {
     }
 
     else if( type !== undefined){
-        const data = await ticketService.getTicketsByType(type, req.id);
+        const data = await ticketService.getTicketsByType(type, req.user.id);
 
         return res.status(201).json({message: "Tickets: ", Ticket: data});
     }
 
     else{
-        const data = await ticketService.getEmployeeTickets(req.id);
+        const data = await ticketService.getEmployeeTickets(req.user.id);
         return res.status(201).json({Tickets: data.Items});
     }
 })
@@ -58,13 +59,13 @@ router.put("/:id", authenticateToken, async(req,res) => {
 
     // console.log("Authorization employee_id: ", req.id);
 
-    const currRole = await ticketService.getUserRole(req.id);
+    const currRole = await ticketService.getUserRole(req.user.id);
 
     if(currRole === "employee"){
         return res.status(403).json({message: "You are not authorized!"});
     }
 
-    const result = await ticketService.updateTicketStatus(id, status, req.id);
+    const result = await ticketService.updateTicketStatus(id, status, req.user.id);
 
     // console.log("result: ", result);
 
