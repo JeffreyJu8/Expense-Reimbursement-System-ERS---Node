@@ -1,13 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const loginMiddleware = require("../middleware/loginMiddleware");
+const { validateLoginMiddleware } = require("../middleware/loginMiddleware");
 const jwt = require('jsonwebtoken');
 const employeeService = require("../service/employeeService");
-const { authenticateToken } = require('../util/jwt');
 
 const secretKey = "my-secret-key";
 
-router.post("/", loginMiddleware, async (req,res) => {
+router.post("/", validateLoginMiddleware, async (req,res) => {
     const {username, password} = req.body;
 
     const data = await employeeService.getUser(username);

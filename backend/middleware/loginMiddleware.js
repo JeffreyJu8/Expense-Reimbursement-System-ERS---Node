@@ -1,19 +1,6 @@
-// const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
-// require("dotenv").config();
-// const { DynamoDBDocumentClient, QueryCommand } = require("@aws-sdk/lib-dynamodb");
 const bcrypt = require("bcrypt");
 const employeeService = require("../service/employeeService");
 
-
-// const client = new DynamoDBClient({
-//     region: process.env.AWS_DEFAULT_REGION,
-//     credentials: {
-//         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-//         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-//     },
-// });
-
-// const documentClient = DynamoDBDocumentClient.from(client);
 
 async function validateLoginMiddleware(req, res, next){
     const jsonBody = req.body;
@@ -41,36 +28,28 @@ async function validateLoginMiddleware(req, res, next){
     next();
 }
 
+async function authenticateToken(req, res, next){
+
+    // authorization: "Bearer tokenstring"
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+
+    //console.log("Received Token:", token); 
+
+    if(!token){
+        return res.status(403).json({message: "You are not logged in!"});
+    }else{
+        // req.id = user.id;
+        // console.log("employee_id: ", req.id);
+        // req.user = user;
+        next();
+    }
+}
+
 
 async function validateLogin(data){
     return (data.username && data.password)
 }
-
-// async function getUser(data){
-//     const params = {
-//         TableName: "Employee",
-//         IndexName: "username-index", 
-//         KeyConditionExpression: "username = :username",
-//         ExpressionAttributeValues: {
-//           ":username": data.username,
-//         },
-//       };
-
-//       try {
-//         const result = await documentClient.send(new QueryCommand(params));
-//         // console.log("Query result:", result);
-//         if (result.Items || result.Items.length > 0) {
-//             return result.Items[0]; // Return existing user
-//           }
-//         else{
-//             return null;
-//         }
-//       } 
-//       catch (error) {
-//         console.error("Error querying:", error);
-//         return null;
-//       }
-// }
 
 async function validateUsername(data){
     const user = await employeeService.getUser(data.username);
@@ -93,4 +72,7 @@ async function validatePassword(data){
     }
 }
 
-module.exports = validateLoginMiddleware;
+module.exports = {
+    validateLoginMiddleware,
+    authenticateToken
+};

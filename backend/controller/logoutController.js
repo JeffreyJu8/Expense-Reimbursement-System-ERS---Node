@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const authenticateToken = require("../middleware/logoutMiddleware");
-
-const secretKey = "my-secret-key";
+const { authenticateToken } = require("../middleware/loginMiddleware");
 
 
 router.post("/", authenticateToken, (req, res) => {
