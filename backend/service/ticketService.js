@@ -37,9 +37,9 @@ async function getPendingTickets(){
 }
 
 
-async function updateTicketStatus(id){
-    const result = await ticketDAO.updateTicketStatus(id);
-}
+// async function updateTicketStatus(id){
+//     const result = await ticketDAO.updateTicketStatus(id);
+// }
 
 
 async function getUserRole(id){

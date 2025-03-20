@@ -82,6 +82,11 @@ async function updateTicketStatus(id, newStatus, resolverId) {
     const ticket = await getTicketById(id);
     // console.log("ticket: ", ticket);
     // console.log("ticket status: ", ticket.Item.status);
+    if(!ticket.Item){
+        console.log("Ticket not found!");
+        return null;
+    }
+    
     if (ticket.Item.status !== "pending"){
         console.log("Processed tickets cannot be changed!");
         return null;
