@@ -14,7 +14,20 @@
         <p><strong>Employee ID:</strong> <span id="employee-id"></span></p>
         <p><strong>Role:</strong> <span id="employee-role"></span></p>
 
+        <button id="edit-profile-btn">Edit Profile</button>
         <button id="back-btn">Back to Home</button>
+
+        <div id="edit-profile-form" style="display: none;">
+            <h2>Edit Profile</h2>
+            <label for="new-username">New Username:</label>
+            <input type="text" id="new-username" placeholder="Enter new username">
+
+            <label for="new-password">New Password:</label>
+            <input type="password" id="new-password" placeholder="Enter new password">
+
+            <button id="save-profile-btn">Save Changes</button>
+            <button id="cancel-edit-btn">Cancel</button>
+        </div>
     </div>
 </body>
 </html>

@@ -38,4 +38,24 @@ router.get(`/:username`, authenticateToken, async (req, res) => {
     res.status(201).json(data);
 })
 
+router.put(`/:username`, authenticateToken, async (req, res) => {
+    const { username } = req.params;
+    let { newUsername, newPassword } = req.body;
+    const user = await employeeService.getUser(username);
+
+    if(!newUsername){
+        newUsername = username;
+    }
+
+    let isPassword = true;
+    if(!newPassword){
+        isPassword = false;
+        newPassword = user.password;
+    }
+
+    const data = await employeeService.editUserProfile(user.employee_id, newUsername, newPassword, isPassword);
+
+    res.status(201).json(data);
+})
+
 module.exports = router;

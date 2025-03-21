@@ -42,4 +42,20 @@ async function getAllEmployee(){
     return result;
 }
 
-module.exports = { registerEmployee, getUser, updateEmployeeRole, getAllEmployee };
+async function editUserProfile(id, newUsername, newPassword, isPassword){
+  let hashedPassword;
+
+  if(isPassword){
+    const saltRounds = 10;
+    hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+  }
+  else{
+    hashedPassword = newPassword;
+  }
+  
+  const result = await employeeDAO.editUserProfile(id, newUsername, hashedPassword);
+
+  return result;
+}
+
+module.exports = { registerEmployee, getUser, updateEmployeeRole, getAllEmployee, editUserProfile };

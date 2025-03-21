@@ -95,4 +95,24 @@ async function getUser(username){
       }
 }
 
-module.exports = { registerEmployee, updateEmployeeRole, getAllEmployee, getUser };
+async function editUserProfile(id, newUsername, hashedPassword){
+    const command = new UpdateCommand ({
+        TableName: "Employee",
+        Key: {"employee_id": id},
+        UpdateExpression: "SET #username = :newUsername, #password = :hashedPassword",
+        ExpressionAttributeNames: {"#username": "username", "#password": "password"},
+        ExpressionAttributeValues: {":newUsername": newUsername, ":hashedPassword": hashedPassword},
+        ReturnValues: "ALL_NEW"
+    });
+
+    try{
+        const result = documentClient.send(command);
+        return result;
+    }
+    catch(err){
+        console.error(err);
+        return null;
+    }
+}
+
+module.exports = { registerEmployee, updateEmployeeRole, getAllEmployee, getUser, editUserProfile };
