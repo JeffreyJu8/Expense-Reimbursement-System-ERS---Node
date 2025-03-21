@@ -66,9 +66,9 @@ router.put(`/:username`, authenticateToken, async (req, res) => {
 
 router.put("/:username/profile-picture", authenticateToken, async (req, res) => {
     const { username } = req.params;
-    const { profilePictureUrl } = req.body;
-
-    if (!profilePictureUrl) {
+    const { profilePicture } = req.body;
+    console.log("profile link: ", profilePicture);
+    if (!profilePicture) {
         return res.status(400).json({ message: "Profile picture URL is required." });
     }
 
@@ -77,7 +77,7 @@ router.put("/:username/profile-picture", authenticateToken, async (req, res) => 
         return res.status(404).json({ message: "User not found" });
     }
 
-    const data = await employeeService.updateProfilePicture(user.employee_id, profilePictureUrl);
+    const data = await employeeService.updateProfilePicture(user.employee_id, profilePicture);
 
     res.status(201).json(data);
 });

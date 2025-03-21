@@ -11,12 +11,12 @@ const authenticateToken = require("../util/jwt");
 
 router.post("/", validateTicketMiddleware, authenticateToken, async (req, res) => {
 
-    const { description, type, amount } = req.body;
+    const { description, type, amount, receipt } = req.body;
 
     // get id from uuid
     // get employee_id from whoever is logged in
     // console.log("Requested employee_id: ", req.id);
-    const newTicket = { id: uuidv4(), employee_id: req.user.id, description, type, amount };
+    const newTicket = { id: uuidv4(), employee_id: req.user.id, description, type, amount, receipt };
 
     const data = await ticketService.submitTicket(newTicket);
 

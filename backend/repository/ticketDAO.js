@@ -23,7 +23,8 @@ async function submitTicket(ticket){
             description: ticket.description,
             type: ticket.type,
             status: "pending",
-            amount: ticket.amount
+            amount: ticket.amount,
+            receipt: ticket.receipt
         }
     });
 

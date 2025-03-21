@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Update profile picture URL
         document.getElementById("update-profile-picture-btn").addEventListener("click", async () => {
             const newProfilePictureUrl = profilePictureInput.value.trim();
+            console.log("newProfilePicture: ", newProfilePictureUrl);
             if (!newProfilePictureUrl) {
                 alert("Please enter a valid image URL.");
                 return;

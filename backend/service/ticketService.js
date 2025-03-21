@@ -15,9 +15,9 @@ const client = new DynamoDBClient({
 const documentClient = DynamoDBDocumentClient.from(client);
 
 
-async function submitTicket({id, employee_id, description, type, amount}){
+async function submitTicket({id, employee_id, description, type, amount, receipt}){
 
-    const result = await ticketDAO.submitTicket({id, employee_id, description, type, amount});
+    const result = await ticketDAO.submitTicket({id, employee_id, description, type, amount, receipt});
 
     if(!result){
         return {message: "Failed to submit ticket"};

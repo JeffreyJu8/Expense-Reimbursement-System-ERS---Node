@@ -135,6 +135,7 @@ async function updateProfilePicture(id, profilePictureUrl){
 
     try{
         const result = await documentClient.send(command);
+        console.log("updated profile picture: ", result);
         return result;
     }
     catch(err){

@@ -6,9 +6,10 @@ document.addEventListener("DOMContentLoaded", () => {
     ticketForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
-        const type = document.getElementById("type").value;
-        const description = document.getElementById("description").value;
-        const amount = document.getElementById("amount").value;
+        const type = document.getElementById("type").value.trim();
+        const description = document.getElementById("description").value.trim();
+        const amount = document.getElementById("amount").value.trim();
+        const receipt = document.getElementById("receipt").value.trim();
 
         const token = localStorage.getItem("token"); 
         if (!token) {
@@ -24,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
                 },
-                body: JSON.stringify({ type, description, amount })
+                body: JSON.stringify({ type, description, amount, receipt })
             });
 
             const data = await response.json();
@@ -44,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         } catch (error) {
             console.error("Error submitting ticket:", error);
+            document.getElementById("message").textContent = "An error occurred while submitting the ticket.";
         }
     });
 });
