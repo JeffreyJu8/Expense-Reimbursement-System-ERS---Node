@@ -7,9 +7,9 @@ const validateRegisterMiddleware = require("../middleware/registerMiddleware")
 
 router.post("/", validateRegisterMiddleware, async (req, res) => {
 
-    const {username, password} = req.body;
+    const {username, password, address} = req.body;
 
-    const newEmployee = { employee_id: uuidv4(), username, password};
+    const newEmployee = { employee_id: uuidv4(), username, password, address};
 
     const data = await employeeService.registerEmployee(newEmployee);
 

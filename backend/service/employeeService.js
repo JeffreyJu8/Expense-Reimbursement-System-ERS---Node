@@ -2,11 +2,11 @@ const employeeDAO = require("../repository/employeeDAO");
 const bcrypt = require("bcrypt");
 
 
-async function registerEmployee({employee_id, username, password}){
+async function registerEmployee({employee_id, username, password, address}){
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const result = await employeeDAO.registerEmployee({employee_id, username, hashedPassword});
+    const result = await employeeDAO.registerEmployee({employee_id, username, hashedPassword, address});
 
     if(!result){
         return {message: "Failed to add employee"};
@@ -42,7 +42,7 @@ async function getAllEmployee(){
     return result;
 }
 
-async function editUserProfile(id, newUsername, newPassword, isPassword){
+async function editUserProfile(id, newUsername, isUsername, newPassword, isPassword, newAddress){
   let hashedPassword;
 
   if(isPassword){
@@ -53,11 +53,11 @@ async function editUserProfile(id, newUsername, newPassword, isPassword){
     hashedPassword = newPassword;
   }
   
-  const result = await employeeDAO.editUserProfile(id, newUsername, hashedPassword);
+  const result = await employeeDAO.editUserProfile(id, newUsername, isUsername, hashedPassword, newAddress);
 
   if (result.error === "Username already exists") {
     return { error: "Username already exists" }; 
-}
+  }
 
   return result;
 }

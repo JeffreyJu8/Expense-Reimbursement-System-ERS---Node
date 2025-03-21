@@ -21,6 +21,7 @@ async function registerEmployee(user){
             username: user.username,
             password: user.hashedPassword,
             role: "employee",
+            address: user.address,
             profilePicture: null
         }
     });
@@ -96,24 +97,26 @@ async function getUser(username){
       }
 }
 
-async function editUserProfile(id, newUsername, hashedPassword){
+async function editUserProfile(id, newUsername, isUsername, hashedPassword, newAddress){
     const user = await getUser(newUsername);
-
-    if(user){
+    // console.log("received user: ", user);
+    if(user && isUsername){
         console.log("Username already exist!");
         return { error: "Username already exists" };
     }
+
     const command = new UpdateCommand ({
         TableName: "Employee",
         Key: {"employee_id": id},
-        UpdateExpression: "SET #username = :newUsername, #password = :hashedPassword",
-        ExpressionAttributeNames: {"#username": "username", "#password": "password"},
-        ExpressionAttributeValues: {":newUsername": newUsername, ":hashedPassword": hashedPassword},
+        UpdateExpression: "SET #username = :newUsername, #password = :hashedPassword, #address = :newAddress",
+        ExpressionAttributeNames: {"#username": "username", "#password": "password", "#address": "address"},
+        ExpressionAttributeValues: {":newUsername": newUsername, ":hashedPassword": hashedPassword, ":newAddress": newAddress},
         ReturnValues: "ALL_NEW"
     });
 
     try{
         const result = await documentClient.send(command);
+        console.log("result: ", result);
         return result;
     }
     catch(err){

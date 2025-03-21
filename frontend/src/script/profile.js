@@ -1,6 +1,5 @@
 const API_BASE_URL = "http://localhost:3000";
 
-
 document.addEventListener("DOMContentLoaded", async () => {
     const token = localStorage.getItem("token");
 
@@ -30,6 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("username").textContent = userData.username;
         document.getElementById("employee-id").textContent = userData.employee_id;
         document.getElementById("employee-role").textContent = userData.role;
+        document.getElementById("employee-address").textContent = userData.address || "N/A";
 
         // Profile picture setup
         const profilePictureElement = document.getElementById("profile-picture");
@@ -37,11 +37,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const profileUrl = userData.profilePicture?.trim();
         if (profileUrl) {
-            console.log("picture link: ", profileUrl);
             profilePictureElement.src = profileUrl;
             profilePictureInput.value = profileUrl;
         }
-
 
         // Show edit form
         document.getElementById("edit-profile-btn").addEventListener("click", () => {
@@ -56,7 +54,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Update profile picture URL
         document.getElementById("update-profile-picture-btn").addEventListener("click", async () => {
             const newProfilePictureUrl = profilePictureInput.value.trim();
-            console.log("newProfilePicture: ", newProfilePictureUrl);
             if (!newProfilePictureUrl) {
                 alert("Please enter a valid image URL.");
                 return;
@@ -87,14 +84,16 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         });
 
-        // Update username/password
+        // Update username, password, and address
         document.getElementById("save-profile-btn").addEventListener("click", async () => {
             const newUsername = document.getElementById("new-username").value.trim();
             const newPassword = document.getElementById("new-password").value.trim();
+            const newAddress = document.getElementById("new-address").value.trim();
 
             const updateData = {};
             if (newUsername) updateData.newUsername = newUsername;
             if (newPassword) updateData.newPassword = newPassword;
+            if (newAddress) updateData.newAddress = newAddress;
 
             if (Object.keys(updateData).length === 0) {
                 alert("Please enter new values to update.");

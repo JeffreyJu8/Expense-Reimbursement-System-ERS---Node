@@ -41,10 +41,12 @@ router.get(`/:username`, authenticateToken, async (req, res) => {
 
 router.put(`/:username`, authenticateToken, async (req, res) => {
     const { username } = req.params;
-    let { newUsername, newPassword } = req.body;
+    let { newUsername, newPassword, newAddress } = req.body;
     const user = await employeeService.getUser(username);
 
+    let isUsername = true;
     if(!newUsername){
+        isUsername = false;
         newUsername = username;
     }
 
@@ -54,7 +56,11 @@ router.put(`/:username`, authenticateToken, async (req, res) => {
         newPassword = user.password;
     }
 
-    const data = await employeeService.editUserProfile(user.employee_id, newUsername, newPassword, isPassword);
+    if(!newAddress){
+        newAddress = user.address;
+    }
+
+    const data = await employeeService.editUserProfile(user.employee_id, newUsername, isUsername, newPassword, isPassword, newAddress);
 
     if (data.error === "Username already exists") {
         return res.status(400).json({ message: "Username already exists" });
