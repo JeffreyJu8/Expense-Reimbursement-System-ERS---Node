@@ -20,7 +20,8 @@ async function registerEmployee(user){
             employee_id: user.employee_id,
             username: user.username,
             password: user.hashedPassword,
-            role: "employee"
+            role: "employee",
+            profilePicture: null
         }
     });
 
@@ -44,7 +45,7 @@ async function updateEmployeeRole(id, newRole){
     })
 
     try{
-        const result = documentClient.send(command);
+        const result = await documentClient.send(command);
         return result;
     }
     catch(err){
@@ -96,6 +97,12 @@ async function getUser(username){
 }
 
 async function editUserProfile(id, newUsername, hashedPassword){
+    const user = await getUser(newUsername);
+
+    if(user){
+        console.log("Username already exist!");
+        return { error: "Username already exists" };
+    }
     const command = new UpdateCommand ({
         TableName: "Employee",
         Key: {"employee_id": id},
@@ -106,7 +113,7 @@ async function editUserProfile(id, newUsername, hashedPassword){
     });
 
     try{
-        const result = documentClient.send(command);
+        const result = await documentClient.send(command);
         return result;
     }
     catch(err){
@@ -115,4 +122,26 @@ async function editUserProfile(id, newUsername, hashedPassword){
     }
 }
 
-module.exports = { registerEmployee, updateEmployeeRole, getAllEmployee, getUser, editUserProfile };
+
+async function updateProfilePicture(id, profilePictureUrl){
+    console.log("profile picture link: ", profilePictureUrl);
+    const command = new UpdateCommand({
+        TableName: "Employee",
+        Key: {"employee_id": id},
+        UpdateExpression: "SET #profilePicture = :profilePictureUrl",
+        ExpressionAttributeNames: {"#profilePicture": "profilePicture"},
+        ExpressionAttributeValues: {":profilePictureUrl": profilePictureUrl}
+    })
+
+    try{
+        const result = await documentClient.send(command);
+        return result;
+    }
+    catch(err){
+        console.error(err);
+        return null;
+    }
+}
+
+
+module.exports = { registerEmployee, updateEmployeeRole, getAllEmployee, getUser, editUserProfile, updateProfilePicture };

@@ -55,7 +55,19 @@ async function editUserProfile(id, newUsername, newPassword, isPassword){
   
   const result = await employeeDAO.editUserProfile(id, newUsername, hashedPassword);
 
+  if (result.error === "Username already exists") {
+    return { error: "Username already exists" }; 
+}
+
   return result;
 }
 
-module.exports = { registerEmployee, getUser, updateEmployeeRole, getAllEmployee, editUserProfile };
+
+async function updateProfilePicture(id, profilePictureUrl){
+  const result = await employeeDAO.updateProfilePicture(id, profilePictureUrl);
+
+  return result;
+}
+
+
+module.exports = { registerEmployee, getUser, updateEmployeeRole, getAllEmployee, editUserProfile, updateProfilePicture };

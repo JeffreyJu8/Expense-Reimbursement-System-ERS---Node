@@ -38,6 +38,7 @@ router.get(`/:username`, authenticateToken, async (req, res) => {
     res.status(201).json(data);
 })
 
+
 router.put(`/:username`, authenticateToken, async (req, res) => {
     const { username } = req.params;
     let { newUsername, newPassword } = req.body;
@@ -55,7 +56,31 @@ router.put(`/:username`, authenticateToken, async (req, res) => {
 
     const data = await employeeService.editUserProfile(user.employee_id, newUsername, newPassword, isPassword);
 
-    res.status(201).json(data);
+    if (data.error === "Username already exists") {
+        return res.status(400).json({ message: "Username already exists" });
+    }
+
+    return res.status(201).json(data);
 })
+
+
+router.put("/:username/profile-picture", authenticateToken, async (req, res) => {
+    const { username } = req.params;
+    const { profilePictureUrl } = req.body;
+
+    if (!profilePictureUrl) {
+        return res.status(400).json({ message: "Profile picture URL is required." });
+    }
+
+    const user = await employeeService.getUser(username);
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+
+    const data = await employeeService.updateProfilePicture(user.employee_id, profilePictureUrl);
+
+    res.status(201).json(data);
+});
+
 
 module.exports = router;

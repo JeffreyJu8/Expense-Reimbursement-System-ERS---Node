@@ -10,6 +10,12 @@
 <body>
     <div class="container">
         <h1>User Profile</h1>
+        
+        <img id="profile-picture" src="" alt="Profile Picture" width="300" height="300">
+        <p><strong>Profile Picture Link:</strong></p>
+        <input type="text" id="profile-picture-url" placeholder="Enter sharable image URL">
+        <button id="update-profile-picture-btn">Update Picture</button>
+
         <p><strong>Username:</strong> <span id="username"></span></p>
         <p><strong>Employee ID:</strong> <span id="employee-id"></span></p>
         <p><strong>Role:</strong> <span id="employee-role"></span></p>
@@ -17,7 +23,7 @@
         <button id="edit-profile-btn">Edit Profile</button>
         <button id="back-btn">Back to Home</button>
 
-        <div id="edit-profile-form" style="display: none;">
+        <div id="edit-profile-form" style="display: none; margin-top: 20px;">
             <h2>Edit Profile</h2>
             <label for="new-username">New Username:</label>
             <input type="text" id="new-username" placeholder="Enter new username">

@@ -1,16 +1,72 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+    margin: 0;
+    padding: 0;
+}
+
 .container {
+    max-width: 500px;
+    margin: 50px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     text-align: center;
-    margin-top: 50px;
+}
+
+h1, h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+img#profile-picture {
+    border-radius: 50%;
+    margin-bottom: 15px;
+    border: 2px solid #007BFF;
+    object-fit: cover;
+}
+
+p {
+    font-size: 16px;
+    color: #444;
+    margin: 8px 0;
+}
+
+span {
+    font-weight: bold;
+    color: #222;
+}
+
+label {
+    display: block;
+    text-align: left;
+    margin: 10px 0 5px 10%;
+    font-weight: 600;
+    color: #333;
+}
+
+input {
+    display: block;
+    margin: 0 auto 15px auto;
+    padding: 10px;
+    width: 80%;
+    max-width: 350px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
 }
 
 button {
-    padding: 10px 15px;
-    margin: 10px;
+    padding: 10px 20px;
+    margin: 10px 5px;
     cursor: pointer;
     background-color: #007BFF;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
 }
 
 button:hover {
@@ -19,15 +75,11 @@ button:hover {
 
 #edit-profile-form {
     display: none;
-    margin-top: 20px;
+    margin-top: 30px;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
 }
 
-input {
-    display: block;
-    margin: 10px auto;
-    padding: 8px;
-    width: 80%;
-    max-width: 300px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+input::placeholder {
+    color: #aaa;
 }
