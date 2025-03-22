@@ -9,7 +9,7 @@ async function registerEmployee({employee_id, username, password, address}){
     const result = await employeeDAO.registerEmployee({employee_id, username, hashedPassword, address});
 
     if(!result){
-        return {message: "Failed to add employee"};
+        return false;
     }
 
     return {message: "Employee added successfully", Employee: result};

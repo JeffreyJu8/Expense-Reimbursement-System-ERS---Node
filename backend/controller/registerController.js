@@ -13,7 +13,12 @@ router.post("/", validateRegisterMiddleware, async (req, res) => {
 
     const data = await employeeService.registerEmployee(newEmployee);
 
-    res.status(201).json({message: "Employee Created: ", Employee: data});
+    console.log("data: ", data);
+    if(!data){
+        return res.status(400).json({message: "Failed to create employee"});
+    }
+
+    return res.status(201).json({message: "Employee Created: ", Employee: data});
 });
 
 
