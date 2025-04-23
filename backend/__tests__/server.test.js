@@ -87,15 +87,26 @@ describe("API Endpoings", () => {
     let authToken;
 
     beforeEach(async () => {
-        const loginRes = await request(app)
+        const adminLoginRes = await request(app)
             .post("/login")
             .send({
                 username: "admin",
                 password: "admin"
             });
 
-        expect(loginRes.statusCode).toBe(200);
-        authToken = loginRes.body.token;
+        expect(adminLoginRes.statusCode).toBe(200);
+        authToken = adminLoginRes.body.token;
+
+        
+        const employeeLoginRes = await request(app)
+        .post("/login")
+        .send({
+            username: "employee1",
+            password: "password123"
+        });
+
+        expect(employeeLoginRes.statusCode).toBe(200);
+        employeeAuthToken = employeeLoginRes.body.token;
     });
 
     test("POST /tickets - success", async () => {
@@ -176,20 +187,7 @@ describe("API Endpoings", () => {
     let employeeAuthToken;
 
     beforeEach(async () => {
-        await request(app)
-            .post("/login")
-            .send({
-                username: "admin",
-                password: "admin"
-            });
-
-
-        await request(app)
-            .post("/login")
-            .send({
-                username: "employee1",
-                password: "password123"
-            });
+        
     });
 
     test("PUT /tickets/:id - success", async () => {
