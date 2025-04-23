@@ -6,21 +6,23 @@ phases:
       nodejs: 16
     commands:
       - echo Installing dependencies...
+      - cd backend
       - npm install
+      - cd ..
   build:
     commands:
       - echo Build started on `date`
+      - cd backend
       - echo Running tests...
       - npm run test
+      - cd ..
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Packaging the files...
-      - cd backend
       - mkdir app
-      - cp -r ./* ./app
-      - zip -r ../app.zip ./app
-      - cd ..
+      - cp -r backend/* ./app
+      - zip -r app.zip ./app
 artifacts:
   files:
     - app.zip
