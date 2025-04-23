@@ -5,9 +5,9 @@ phases:
     runtime-versions:
       nodejs: 16
     commands:
-      - aws iam attach-role-policy --role-name codebuild-revature-expense-tracker-build-service-role --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
       - echo Installing dependencies...
       - cd backend
+      - rm -rf node_modules
       - npm install
       - cd ..
   build:
