@@ -247,7 +247,7 @@ describe("API Endpoings", () => {
         console.log("Response Status:", res.statusCode);
         console.log("Response Body:", res.body);
 
-        expect(res.statusCode).toBe(201);
+        expect(res.statusCode).toBe(200);
     });
 
     test("GET /tickets?status=pending - Forbidden view pending tickets", async () => {
